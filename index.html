@@ -123,7 +123,7 @@
     <div class="panel">
       <h2>YOU WIN!</h2>
       <p>The little old lady toots her horn, asks for his number...</p>
-      <p class="dim">James respectfully declined. Tendons: fully intact.</p>
+      <p class="dim">Jemes respectfully declined. Tendons: fully intact.</p>
       <p class="small">She took it gracefully. Bridge club awaits.</p>
       <div class="prompt" id="vprompt"></div>
     </div>
@@ -131,7 +131,7 @@
   <div id="lose" class="overlay hidden">
     <div class="panel">
       <h2>GAME OVER</h2>
-      <p>James' Achilles tendon snapped like a cheap guitar string.</p>
+      <p>Jemes' Achilles tendon snapped like a cheap guitar string.</p>
       <p class="dim">The car remains. The scream echoes still.</p>
       <p class="small">R.I.P._push_season.mp3</p>
       <div class="prompt" id="lprompt"></div>
@@ -163,7 +163,7 @@ const G={
   animT:0,animKind:'',qte:null,winT:0,winSpeed:16,carDriveX:0,carGone:false,
   wheelSpin:0,walkPh:0,flash:0,shake:0,snapPop:-1,screaming:false,
   snapPlayed:false,screamPlayed:false,puffTimer:0,line1Shown:false,line2Shown:false,
-  jamesPose:'idle',dragAng:0
+  JemesPose:'idle',dragAng:0
 };
 
 let AC=null,master=null,muted=false;
@@ -524,11 +524,11 @@ let grannyHead;
 car.add(granny);
 scene.add(car);
 
-const james=new THREE.Group();
-const jamesBody=new THREE.Group();
-let legL,legR,armL,armR,jamesHead;
+const Jemes=new THREE.Group();
+const JemesBody=new THREE.Group();
+let legL,legR,armL,armR,JemesHead;
 {
-  jamesBody.position.y=0.85;
+  JemesBody.position.y=0.85;
   const legGeo=new THREE.CylinderGeometry(0.085,0.085,0.85,8);
   legL=new THREE.Group();legR=new THREE.Group();
   [legL,legR].forEach((leg,i)=>{
@@ -539,12 +539,12 @@ let legL,legR,armL,armR,jamesHead;
     shoe.position.set(0.07,-0.82,0);
     leg.add(mesh,shoe);
     leg.position.set(0,0.85,i?0.15:-0.15);
-    james.add(leg);
+    Jemes.add(leg);
   });
   const torso=new THREE.Mesh(new THREE.BoxGeometry(0.44,0.72,0.3),
     new THREE.MeshLambertMaterial({color:0x4ecdc4}));
   torso.position.y=0.36;torso.castShadow=true;
-  jamesHead=new THREE.Group();
+  JemesHead=new THREE.Group();
   const head=new THREE.Mesh(new THREE.SphereGeometry(0.24,14,12),
     new THREE.MeshLambertMaterial({color:0xf2c29b}));
   head.castShadow=true;
@@ -558,8 +558,8 @@ let legL,legR,armL,armR,jamesHead;
   const mouth=new THREE.Mesh(new THREE.BoxGeometry(0.06,0.02,0.12),
     new THREE.MeshBasicMaterial({color:0x7a3b3b}));
   mouth.position.set(0.22,-0.09,0);
-  jamesHead.add(head,hair,e1,e2,mouth);
-  jamesHead.position.y=0.82;
+  JemesHead.add(head,hair,e1,e2,mouth);
+  JemesHead.position.y=0.82;
   const armGeo=new THREE.CylinderGeometry(0.065,0.065,1.05,8);
   armL=new THREE.Group();armR=new THREE.Group();
   [armL,armR].forEach((arm,i)=>{
@@ -567,12 +567,12 @@ let legL,legR,armL,armR,jamesHead;
     mesh.position.y=-0.5;mesh.castShadow=true;
     arm.add(mesh);
     arm.position.set(0,0.6,i?0.19:-0.19);
-    jamesBody.add(arm);
+    JemesBody.add(arm);
   });
-  jamesBody.add(torso,jamesHead);
-  james.add(jamesBody);
+  JemesBody.add(torso,JemesHead);
+  Jemes.add(JemesBody);
 }
-scene.add(james);
+scene.add(Jemes);
 
 const puffMat=new THREE.MeshBasicMaterial({color:0xdadae0,transparent:true});
 const puffs3d=[];
@@ -642,10 +642,10 @@ function resetGame(){
   G.winT=0;G.winSpeed=16;G.carGone=false;G.carDriveX=0;
   G.wheelSpin=0;G.walkPh=0;G.flash=0;G.shake=0;G.snapPop=-1;G.screaming=false;
   G.snapPlayed=false;G.screamPlayed=false;G.line1Shown=false;G.line2Shown=false;
-  G.jamesPose='idle';
+  G.JemesPose='idle';
   confetti.forEach(c=>c.el.remove());
   confetti.length=0;
-  james.visible=true;car.visible=true;
+  Jemes.visible=true;car.visible=true;
   renderHearts();renderProgress();renderPushLabel();
 }
 function startQTE(){
@@ -661,14 +661,14 @@ function startQTE(){
 }
 function beginWin(){
   G.mode='win';G.modeT=0;G.winT=0;G.winSpeed=10;
-  G.carDriveX=carXAt(1);G.jamesPose='wave';G.puffTimer=0;
+  G.carDriveX=carXAt(1);G.JemesPose='wave';G.puffTimer=0;
   G.line1Shown=false;G.line2Shown=false;
   playEngine();playHonk();
   addFloat('BEEP BEEP!',new THREE.Vector3(carXAt(1),heightAt(carXAt(1))+3.4,0),'#ffd93b',24);
 }
 function beginSnap(){
   G.mode='snap';G.modeT=0;G.snapPop=-1;G.screaming=false;
-  G.snapPlayed=false;G.screamPlayed=false;G.jamesPose='fallen';G.shake=1;
+  G.snapPlayed=false;G.screamPlayed=false;G.JemesPose='fallen';G.shake=1;
 }
 function successQTE(perfect){
   G.qte.resolved=true;
@@ -680,7 +680,7 @@ function successQTE(perfect){
   G.carFrom=G.carP;
   G.carTo=Math.min(1,G.carP+1/TOTAL_PUSHES);
   G.mode='anim';G.animKind='push';G.animT=0;
-  G.jamesPose='push';G.walkPh=0;
+  G.JemesPose='push';G.walkPh=0;
   G.shake=Math.max(G.shake,perfect?0.25:0.12);
   spawnPuff3(cx-1.6,heightAt(cx)+0.3,0.9);
   spawnPuff3(cx-1.6,heightAt(cx)+0.3,-0.9);
@@ -694,7 +694,7 @@ function failQTE(msg){
   renderHearts();
   if(G.hearts<=0){beginSnap();}
   else{
-    G.mode='anim';G.animKind='strain';G.animT=0;G.jamesPose='strain';
+    G.mode='anim';G.animKind='strain';G.animT=0;G.JemesPose='strain';
   }
 }
 function pressQTE(){
@@ -754,10 +754,10 @@ function update(dt){
       if(k>=1){
         renderProgress();renderPushLabel();
         if(G.successes>=TOTAL_PUSHES){beginWin();}
-        else{G.jamesPose='idle';startQTE();}
+        else{G.JemesPose='idle';startQTE();}
       }
     }else{
-      if(G.animT>0.6){G.jamesPose='idle';startQTE();}
+      if(G.animT>0.6){G.JemesPose='idle';startQTE();}
     }
   }
   else if(G.mode==='win'){
@@ -851,28 +851,28 @@ function animateActors(t,dt){
     grannyHead.position.y=1.42+Math.sin(t*9)*0.02;
   }
   const jx=carXAt(G.mode==='win'||G.mode==='victory'||G.carGone?1:G.carP)-3.7;
-  james.position.set(jx,heightAt(jx),0);
+  Jemes.position.set(jx,heightAt(jx),0);
   let lean=0.35+Math.sin(t*2.2)*0.03;
   if(G.mode==='qte')lean=0.5;
-  if(G.jamesPose==='push')lean=0.62;
-  if(G.jamesPose==='strain')lean=0.78;
-  if(G.jamesPose==='wave')lean=0.06;
-  if(G.jamesPose==='fallen'){
+  if(G.JemesPose==='push')lean=0.62;
+  if(G.JemesPose==='strain')lean=0.78;
+  if(G.JemesPose==='wave')lean=0.06;
+  if(G.JemesPose==='fallen'){
     const k=G.snapPop>=0?easeOutBack(clamp(G.snapPop,0,1)):0;
-    james.rotation.z=-1.45*k;
-    james.position.y=heightAt(jx)+0.32*k;
+    Jemes.rotation.z=-1.45*k;
+    Jemes.position.y=heightAt(jx)+0.32*k;
     legR.rotation.z=-0.95*k;
     legL.rotation.z=0.15*k;
-    jamesBody.rotation.z=0.1*k;
+    JemesBody.rotation.z=0.1*k;
     armL.rotation.z=2.6*k;
     armR.rotation.z=2.9*k;
   }else{
-    james.rotation.z=0;
-    jamesBody.rotation.z=lean;
-    const walking=(G.jamesPose==='push');
+    Jemes.rotation.z=0;
+    JemesBody.rotation.z=lean;
+    const walking=(G.JemesPose==='push');
     legL.rotation.z=walking?Math.sin(G.walkPh)*0.55:0.06;
     legR.rotation.z=walking?-Math.sin(G.walkPh)*0.55:-0.06;
-    if(G.jamesPose==='wave'){
+    if(G.JemesPose==='wave'){
       armR.rotation.z=2.5+Math.sin(t*7)*0.3;
       armR.rotation.x=-0.3;
       armL.rotation.z=0.35;
